@@ -14,7 +14,7 @@ Inputs:
 - parsed_results/*.jsonl
 
 Output:
-- DrugESP_149k_compact.json
+- DrugESP_149k.json
 
 Filtering:
 - Only converged ORCA calculations
@@ -32,7 +32,7 @@ import glob
 # Configuration
 MASTER_META = "MOSES_150k_Master.json"
 WORKER_DIR  = "parsed_results/*.jsonl"
-FINAL_NAME  = "DrugESP_149k_compact.json"
+FINAL_NAME  = "DrugESP_149k.json"
 CHARGE_THRESHOLD = 3.0
 
 # Main collection routine
