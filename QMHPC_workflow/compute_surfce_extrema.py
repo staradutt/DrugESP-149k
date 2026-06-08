@@ -16,10 +16,10 @@ Method used:
 - Store minimum and maximum ESP values
 
 Input:
-- DrugESP_149k_compact.json
+- DrugESP_149k.json
 
 Output:
-- Updated DrugESP_149k_compact.json
+- Updated DrugESP_149k.json
   containing:
     - vmin_kcal
     - vmax_kcal
@@ -78,7 +78,7 @@ def compute_vmin_vmax(mol):
 #main execution 
 def main():
     # Load compact dataset
-    with open("DrugESP_149k_compact.json") as f:
+    with open("DrugESP_149k.json") as f:
         dataset = json.load(f)
     # Parallel ESP calculations
     with mp.Pool(processes=mp.cpu_count()) as pool:
@@ -91,7 +91,7 @@ def main():
         if res:
             mol.update({'vmin_kcal': res['vmin_kcal'], 'vmax_kcal': res['vmax_kcal']})
     # Save updated dataset
-    with open("DrugESP_149k_compact.json", 'w', separators=(',', ':')) as f:
+    with open("DrugESP_149k.json", 'w', separators=(',', ':')) as f:
         json.dump(dataset, f)
     print("Vmin/Vmax updated in compact JSON.")
 
