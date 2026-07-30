@@ -1,0 +1,11 @@
+FDA-approved molecule ORCA input demo
+========================================
+Source dataset: Drug_ESP_FDA.json
+Chosen mol_id: fda_1003
+drug_name: emtricitabine
+fda_appl_no: 021500 (N)
+fda_trade_name: EMTRIVA
+smiles: NC1=NC(=O)N(C=C1F)[C@@H]1CS[C@H](CO)O1
+
+Level of theory: B3LYP/6-31G*, TightSCF, CHELPG (gas-phase)
+(matches the main DrugESP-149k dataset's level of theory)

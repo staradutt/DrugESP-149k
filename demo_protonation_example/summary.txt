@@ -1,0 +1,12 @@
+Protonation state enumeration demo
+========================================
+Source dataset: Drug_ESP_149k.json
+Chosen mol_id: 9
+pH window: 6.4-8.4 (dimorphite-dl)
+
+neutral (charge +0): O=C(Cc1n[nH]c(=O)c2ccccc12)NCCc1cccnc1
+pos1 (charge +1): O=C(Cc1n[nH]c(=O)c2ccccc12)NCCc1ccc[nH+]c1
+neg1 (charge -1): O=C(Cc1n[n-]c(=O)c2ccccc12)NCCc1cccnc1
+
+Level of theory: B3LYP/6-31+G*/CPCM(water), TightSCF, CHELPG
+(matches the charged-extension production level of theory)
