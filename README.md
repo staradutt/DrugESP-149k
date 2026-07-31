@@ -1,6 +1,6 @@
-# DrugESP-149K
+# DrugESP
 
-Code accompanying the DrugESP-149K dataset: a quantum chemical dataset of
+Code accompanying the DrugESP dataset: a quantum chemical dataset of
 electrostatic and electronic properties for drug-like molecules, plus
 protonated/deprotonated and FDA-approved reference extensions.
 
