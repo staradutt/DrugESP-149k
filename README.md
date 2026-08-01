@@ -1,12 +1,12 @@
 # DrugESP — electrostatic & electronic properties for drug-like molecules
 
-Dataset and code supporting DrugESP: a quantum-chemical dataset of electrostatic and electronic properties for drug-like molecules, plus protonated/deprotonated and FDA-approved reference extensions. [...] 
+Dataset and code supporting DrugESP: a quantum-chemical dataset of electrostatic and electronic properties for drug-like molecules, plus protonated/deprotonated and FDA-approved reference extensions. 
 
 DOI (dataset JSON files on Zenodo): https://doi.org/10.5281/zenodo.21709579
 
 What this is
 ------------
-DrugESP provides DFT-computed electrostatic potentials, atomic partial charges (CHELPG), and a set of electronic properties for ~149k drug-like molecules, along with matched charged/protonated variant[...]
+DrugESP provides DFT-computed electrostatic potentials, atomic partial charges (CHELPG), and a set of electronic properties for ~149k drug-like molecules, along with matched charged/protonated variants
 - data processing and molecule collection scripts,
 - HPC/ORCA job generation and parsing tools,
 - validation and analysis scripts,
@@ -134,7 +134,7 @@ HPC / ORCA production pipeline
 - `QMHPC_workflow/mega_job.sh` is an example driver for batching and submitting jobs to an HPC scheduler (SLURM-style). Adjust to match your cluster.
 - `QMHPC_workflow/parse_mol.py` and `compute_surfce_extrema.py` parse ORCA outputs and post-process electrostatic potentials / surface extrema.
 
-Note: ORCA (the quantum chemistry package) is required to run the DFT calculations. The repository contains example ORCA input templates (e.g. `oxcarbazepine_sample.inp`) and small demo input files in[...] 
+Note: ORCA (the quantum chemistry package) is required to run the DFT calculations. The repository contains example ORCA input templates (e.g. `oxcarbazepine_sample.inp`) 
 
 Validation, benchmarks and case studies
 --------------------------------------
@@ -152,11 +152,6 @@ SchNet model training & evaluation
 - Evaluation: `SchNetHPC/schnet_eval.py` evaluates models / writes metrics.
 - A pretrained checkpoint is included: `SchNetHPC/schnet_chelpg_best.pt` to reproduce reported results or as a starting point for fine-tuning.
 
-Practical notes & tips
-----------------------
-- Atom ordering: the `coords` and `species` arrays match the atom order RDKit assigns after `AddHs()` on the stored SMILES. When reconstituting molecules in RDKit, use `AddHs()` before assigning the s[...]
-- Not every neutral parent has both +1 and -1 ionized partners in the charged set; check for missing entries before assuming a full triplet.
-- For heavy analysis or model training, load JSON entries lazily or convert to a binary format (HDF5 / NPZ) as the full JSON files can be large.
 
 Contributing, licensing & citation
 ---------------------------------
