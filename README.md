@@ -1,12 +1,12 @@
 # DrugESP — electrostatic & electronic properties for drug-like molecules
 
-Dataset and code supporting DrugESP: a quantum-chemical dataset of electrostatic and electronic properties for drug-like molecules, plus protonated/deprotonated and FDA-approved reference extensions. This repository contains the code, pipelines, example inputs, and model training / evaluation scripts used to build and validate the dataset and to train a SchNet model on CHELPG charges.
+Dataset and code supporting DrugESP: a quantum-chemical dataset of electrostatic and electronic properties for drug-like molecules, plus protonated/deprotonated and FDA-approved reference extensions. [...] 
 
 DOI (dataset JSON files on Zenodo): https://doi.org/10.5281/zenodo.21709579
 
 What this is
 ------------
-DrugESP provides DFT-computed electrostatic potentials, atomic partial charges (CHELPG), and a set of electronic properties for ~149k drug-like molecules, along with matched charged/protonated variants and an FDA-approved subset used for benchmarking and demonstration. This repo contains:
+DrugESP provides DFT-computed electrostatic potentials, atomic partial charges (CHELPG), and a set of electronic properties for ~149k drug-like molecules, along with matched charged/protonated variant[...]
 - data processing and molecule collection scripts,
 - HPC/ORCA job generation and parsing tools,
 - validation and analysis scripts,
@@ -24,8 +24,7 @@ Repository layout (top-level)
 ```
 DrugESP_149k_moses_mapping.json   # mapping to MOSES indices/splits (mol_id -> source)
 ESP_case_study/                   # CHELPG-vs-QM ESP validation scripts and data
-Func_Val/                         # functional sensitivity validation (wB97X-D3 vs B3LYP)
-Geom_Val/                         # geometry sensitivity validation (MMFF94 vs DFT)
+fig_method_validation/            # method-validation figure bundle (functional & geometry sensitivity)
 QMHPC_workflow/                   # ORCA/HPC production pipeline: input generation, job scripts, parsing, QC
 moses_pipeline/                   # molecule collection, filtering, and geometry generation
 demo_protonation_example/         # example protonation-state enumeration + ORCA inputs
@@ -37,11 +36,14 @@ LICENSE                           # MIT license
 oxcarbazepine_sample.inp          # example ORCA input
 ```
 
+Note: The `Func_Val/` and `Geom_Val/` folders previously used for functional- and geometry-sensitivity validation were removed; their validation summary and the reproducibility bundle for the method-validation figure are now available in `fig_method_validation/` (see below).
+
 How it fits together
 --------------------
 - moses_pipeline/ gathers and filters source molecules (MOSES mapping), prepares initial geometries and SMILES for DFT runs.
 - QMHPC_workflow/ turns those molecules into ORCA input files, contains a submission helper (mega_job.sh) and parsers that extract energies, CHELPG charges and other properties from ORCA output.
-- ESP_case_study/, Func_Val/, Geom_Val/ contain validation code and example results used in the paper / documentation; these are useful for reproducing the figures and sanity-checking dataset quality.
+- ESP_case_study/ contains code and data used to validate CHELPG-derived ESPs vs direct QM ESPs (example script: `esp_compare.py`, supporting data and figures included).
+- fig_method_validation/ contains the reproducibility bundle and summary for the method-validation figure, which captures both the functional sensitivity (B3LYP vs ωB97X-D3) and geometry sensitivity (MMFF94 vs DFT-optimized) comparisons used in the paper; this replaces the older Func_Val/ and Geom_Val/ folders.
 - SchNetHPC/ contains code to train and evaluate a SchNet model to predict CHELPG charges and related properties; a pretrained checkpoint (schnet_chelpg_best.pt) and evaluation scripts are included.
 - demo_protonation_example/ and demo_fda_example/ are small runnable examples showing how protonation/ionization variants and FDA subset inputs were generated and tested.
 
@@ -132,12 +134,17 @@ HPC / ORCA production pipeline
 - `QMHPC_workflow/mega_job.sh` is an example driver for batching and submitting jobs to an HPC scheduler (SLURM-style). Adjust to match your cluster.
 - `QMHPC_workflow/parse_mol.py` and `compute_surfce_extrema.py` parse ORCA outputs and post-process electrostatic potentials / surface extrema.
 
-Note: ORCA (the quantum chemistry package) is required to run the DFT calculations. The repository contains example ORCA input templates (e.g. `oxcarbazepine_sample.inp`) and small demo input files in the demo directories.
+Note: ORCA (the quantum chemistry package) is required to run the DFT calculations. The repository contains example ORCA input templates (e.g. `oxcarbazepine_sample.inp`) and small demo input files in[...] 
 
 Validation, benchmarks and case studies
 --------------------------------------
 - ESP_case_study/ contains code and data used to validate CHELPG-derived ESPs vs direct QM ESPs (example script: `esp_compare.py`, supporting data and figures included).
-- Func_Val/ and Geom_Val/ contain JSON result sets and generator scripts used to assess sensitivity to functional and geometry choices (e.g. `wb97_val_612.json`, `geom_val_450.json`).
+- The method-validation figure (functional and geometry sensitivity checks) is bundled in `fig_method_validation/` and includes a standalone plotting script plus the NumPy arrays needed to exactly reproduce the figure comparing:
+  - Functional choice: B3LYP vs ωB97X-D3 (CHELPG charges, dipole, polarizability)
+  - Geometry source: MMFF94 vs DFT-optimized (CHELPG charges, dipole)
+
+  See `fig_method_validation/README.md` (and the bundled `method_validation_data.npz` and `plot_figure.py`) for details and reproducible plotting.
+- For historical reference, the older folders `Func_Val/` and `Geom_Val/` were used during development; their key summary is captured in `fig_method_validation/`.
 
 SchNet model training & evaluation
 ---------------------------------
@@ -147,7 +154,7 @@ SchNet model training & evaluation
 
 Practical notes & tips
 ----------------------
-- Atom ordering: the `coords` and `species` arrays match the atom order RDKit assigns after `AddHs()` on the stored SMILES. When reconstituting molecules in RDKit, use `AddHs()` before assigning the saved coordinates.
+- Atom ordering: the `coords` and `species` arrays match the atom order RDKit assigns after `AddHs()` on the stored SMILES. When reconstituting molecules in RDKit, use `AddHs()` before assigning the s[...]
 - Not every neutral parent has both +1 and -1 ionized partners in the charged set; check for missing entries before assuming a full triplet.
 - For heavy analysis or model training, load JSON entries lazily or convert to a binary format (HDF5 / NPZ) as the full JSON files can be large.
 
@@ -159,4 +166,4 @@ Contributing, licensing & citation
 
 Contact / Support
 -----------------
-Open issues in this repository for bug reports, data problems, or questions about reproducing the results. For questions about dataset provenance or experimental details, reference the relevant folder (QMHPC_workflow, ESP_case_study, Func_Val, Geom_Val) when opening an issue.
+Open issues in this repository for bug reports, data problems, or questions about reproducing the results. For questions about dataset provenance or experimental details, reference the relevant folder[...]
