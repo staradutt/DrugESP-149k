@@ -1,4 +1,4 @@
-# Using DrugESP-149K in Python
+# Using DrugESP in Python
 
 Quick reference for loading the dataset and pulling individual molecules,
 covering all four dataset files.
