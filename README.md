@@ -161,4 +161,4 @@ Contributing, licensing & citation
 
 Contact / Support
 -----------------
-Open issues in this repository for bug reports, data problems, or questions about reproducing the results. For questions about dataset provenance or experimental details, reference the relevant folder[...]
+Open issues in this repository for bug reports, data problems, or questions about reproducing the results.
